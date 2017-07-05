@@ -4,7 +4,7 @@ const Request = require('request')
 const fs = require('fs')
 
 
-var getGdaxPrice = () => {
+var getGdaxPriceLTC = () => {
   return new Promise((resolve, reject) => {
     Request({
       method: 'GET',
@@ -20,7 +20,7 @@ var getGdaxPrice = () => {
 }
 
 
-var getKrakenPrice = () => {
+var getKrakenPriceLTC = () => {
     return new Promise((resolve, reject) => {
       Request({
           uri: `https://api.kraken.com/0/public/Ticker?pair=XLTCZUSD`
@@ -34,7 +34,7 @@ var getKrakenPrice = () => {
 
 setInterval(() => {
 
-  Promise.all([getGdaxPrice(), getKrakenPrice()])
+  Promise.all([getGdaxPriceLTC(), getKrakenPriceLTC()])
     .then(response => {
       fs.appendFile('LTC.csv', `${new Date()}, ${response} \n`, (err) => {if (err) throw err;});
     })

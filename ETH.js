@@ -4,7 +4,7 @@ const Request = require('request')
 const fs = require('fs')
 
 
-var getGeminiPrice = () => {
+var getGeminiPriceETH = () => {
   return new Promise((resolve, reject) => {
     const geminiData = {};
 
@@ -22,7 +22,7 @@ var getGeminiPrice = () => {
 }
 
 
-var getGdaxPrice = () => {
+var getGdaxPriceETH = () => {
   return new Promise((resolve, reject) => {
     Request({
       method: 'GET',
@@ -38,7 +38,7 @@ var getGdaxPrice = () => {
 }
 
 
-var getKrakenPrice = () => {
+var getKrakenPriceETH = () => {
     return new Promise((resolve, reject) => {
       Request({
           uri: `https://api.kraken.com/0/public/Ticker?pair=XETHZUSD`
@@ -52,7 +52,7 @@ var getKrakenPrice = () => {
 
 setInterval(() => {
 
-  Promise.all([getGeminiPrice(), getGdaxPrice(), getKrakenPrice()])
+  Promise.all([getGeminiPriceETH(), getGdaxPriceETH(), getKrakenPriceETH()])
     .then(response => {
       fs.appendFile('ETH.csv', `${new Date()}, ${response} \n`, (err) => {if (err) throw err;});
     })
